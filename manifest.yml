@@ -1,0 +1,10 @@
+---
+name: Tycho
+category: Interactive Apps
+subcategory: GUIs
+role: batch_connect
+description: |
+  This app will launch a [Tycho] GUI. You will be able
+  to interact with the Tycho GUI through a VNC session.
+
+  [Tycho]: https://www.tycho-tracker.com/

@@ -1,0 +1,9 @@
+# Export the module function if it exists
+[[ $(type -t module) == "function" ]] && export -f module
+if [[ "$SLURM_JOB_PARTITION" == "gpu" ]]; then
+    if [ -n "$CUDA_VISIBLE_DEVICES" ]; then
+      FIRSTGPU=$(echo $CUDA_VISIBLE_DEVICES | tr ',' "\n" | head -1)
+      let "FIRSTGPU++"
+      export VGL_DISPLAY="/dev/dri/card$FIRSTGPU"
+    fi
+fi

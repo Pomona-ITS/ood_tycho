@@ -1,0 +1,22 @@
+---
+batch_connect:
+  template: vnc
+script:
+  queue_name: "<%= pom_partitions %>"
+  native:
+    - "--nodes=1"
+    <%- unless pom_num_gpus.blank? or pom_num_gpus.to_i == 0 -%>
+    <%- if pom_gpu_type == "any" -%>
+    - "--gres=gpu:<%= pom_num_gpus %>"
+    <%- else -%>
+    - "--gres=gpu:<%= pom_gpu_type %>:<%= pom_num_gpus %>"
+    <%- end -%>
+    <%- end -%>
+    - "--time"
+    - "0-<%= pom_num_hours %>"
+    - "--cpus-per-task=<%= pom_num_cores %>"
+    - "--mem=<%= pom_num_memories %>G"
+    <%- unless bc_email_on_started.to_i == 0 -%>
+    - "--mail-type=BEGIN"
+    - "--mail-user=<%= ENV['USER'] %>@pomona.edu,<%= ENV['USER'] %>@mymail.pomona.edu"
+    <%- end -%>
